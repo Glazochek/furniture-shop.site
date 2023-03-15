@@ -1,0 +1,21 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style-login.css'%}">
+<link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="block-1">
+  <form class="form-horizontal" action="{% url 'auth:register' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ register_form.as_p }}
+    <br>
+    <input class="form-control" type="submit" value="зарегистрироваться">
+    <a class="form-control btmm" class="" href="{% url 'auth:login' %}">Вернутся к входу</a>
+  </form>
+</div>
+{% endblock %}

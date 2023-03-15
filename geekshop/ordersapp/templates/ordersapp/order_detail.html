@@ -1,0 +1,42 @@
+{% extends "ordersapp/base.html" %}
+{% load static %}
+{% load my_tags %}
+
+{% block js %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/order-style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="general-ord-2">
+  {% include 'ordersapp/includes/inc_order_summary.html' %}
+  <div class="basket_list">
+
+    {% for item in object.orderitems.select_related %}
+
+    <div class="basket_record">
+      <img src="{{ item.product.image|media_folder_products }}"
+           alt="{{ item.product.short_desc }}"
+           class="img-pr-ord">
+      <div class="info-pr-ord-1">
+        <span class="category_name"><b>Категория: </b>{{ item.product.category.name }}</span>
+        <span class="product_name"><b>Имя: </b>{{ item.product.name }}</span>
+      </div>
+      <div class="info-pr-ord-2">
+        <span class="product_price">{{ item.product.price }}&nbspруб</span>
+        <span class="product_quantitiy">x {{ item.quantity }} шт.</span>
+        <span class="product_cost">= {{ item.get_product_cost }}&nbspруб</span>
+      </div>
+    </div>
+
+    {% endfor %}
+
+  </div>
+  <div class="btm-form-ord">{% include 'ordersapp/includes/inc_order_actions.html' %}</div>
+</div>
+
+{% endblock %}
+
+

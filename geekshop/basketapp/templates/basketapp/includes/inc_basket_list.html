@@ -1,0 +1,47 @@
+{% load static %}
+<div class="block-1" style="margin: 50px;">
+  {% if basket_items %}
+  <div class="bask-0">
+    {% for item in basket_items %}
+    <div class="basket_record">
+      <span class="product_name"><b>{{ item.product.name }}</b></span><br>
+      {% if item.product.category.name %}
+      <span class="category_name">{{ item.product.category.name }}</span><br>
+      {% else %} <span class="category_name">все</span><br>
+      {% endif %}
+
+      <span class="product_price">{{ item.product.price }} $</span><br>
+      <div class="brb">
+        <input class="ipt" type="number" name="{{ item.pk }}" min="0" value="{{ item.quantity }}">
+        <button class="remv btn btn-round">
+          <a href="{% url 'basket:remove' item.pk %}" class="">
+            удалить
+          </a>
+        </button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="basket_summary">
+    <div class="end-itg-2">
+      {{ basket_items.0.total_quantity }}
+    </div>
+    <div class="proble">|</div>
+    <div class="end-itg-1">
+      {{ basket_items.0.total_cost }} $
+    </div>
+    <button>
+      <a href="{% url 'ordersapp:order_create' %}" class="">
+        оформить
+      </a>
+    </button>
+  </div>
+  {% else %}
+  <div class="empty-basket">
+    корзина пуста
+  </div>
+
+  {% endif %}
+</div>
+
+

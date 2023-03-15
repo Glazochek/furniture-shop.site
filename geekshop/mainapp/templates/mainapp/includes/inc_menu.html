@@ -1,0 +1,44 @@
+{% load static %}
+<ul class="menu">
+  <li><a href="/" class="{% if title == 'главная' %}active{% endif %}">
+    домой
+  </a></li>
+  <li><a href="{% url 'products:category' 0 %}" class="{% if title == 'продукты' %}active{% endif %}">
+    продукты
+  </a></li>
+
+   <li><a href="{% url 'contact' %}" class="{% if title == 'контакты' %}active{% endif %}">
+    контакты
+  </a></li>
+
+  {% if not user.is_authenticated %}
+  <li><a href="{% url 'auth:login' %}" class="log-name">
+    Войти
+  </a></li>
+  {% endif %}
+
+  {% if user.is_superuser %}
+  <li><a href="{% url 'admin:users' %}" class="log-name">
+    админка
+  </a></li>
+  {% endif %}
+</ul>
+{% if user.is_authenticated %}
+<div class="links-log-block">
+  <div id="links" class="links-log">
+    <div id="inpt" class="inpt" type="checkbox" value="Click" onmouseenter="viewDiv()" onmouseleave="hidDiv()">
+      <div id="nav-link" class="nav-link">
+        <a class="link-log link-1" id="link-1" href="{% url 'auth:edit' %}">
+          <img class="link-img" src="{% static 'img/6.png' %}" alt="#">
+        </a>
+        <a class="link-log link-2" id="link-2" href="{% url 'basket:view' %}">
+          <img class="link-img" src="{% static 'img/5.png' %}" alt="#">
+        </a>
+        <a class="link-log link-3" id="link-3" href="{% url 'order:orders_list' %}">
+          <img class="link-img" src="{% static 'img/7.png' %}" alt="#">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

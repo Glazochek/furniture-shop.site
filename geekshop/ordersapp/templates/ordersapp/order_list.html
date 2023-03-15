@@ -1,0 +1,111 @@
+{% extends 'ordersapp/base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/order-style.css' %}">
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+
+<div class="btm-general">
+  <div class="h2 text-center head">
+  {% if user.username %}
+  <b>{{ user.username|title}}</b>
+  {% elif user.first_name %}
+  {{ user.first_name|title}}
+  {% else %}
+  Пользователь
+  {% endif %}
+</div>
+
+</div>
+{% if object_list|length != 0 %}
+<table class="table orders_list">
+  <thead>
+  <tr class="tr-1">
+    <th class="id-ord">ID</th>
+    <th>Создан</th>
+    <th>Обновлен</th>
+    <th>Статус</th>
+    <th class="instrumebt">Инструменты</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for item in object_list %}
+  {% if item.is_active %}
+  <tr class="tr-2">
+    <td class="td1">{{ item.pk }}</td>
+    <td class="date">{{ item.created|date:"Y-m-d H:i:s" }}</td>
+    <td class="updated">{{ item.updated|date:"Y-m-d H:i:s" }}</td>
+    <td class="status">{{ item.get_status_display }}</td>
+    <td class="tr-3">
+    <button class="btn-ord">
+      <a href="{% url 'ordersapp:order_read' item.pk %}">
+        посмотреть
+      </a>
+    </button>
+    {% if item.status == 'FM' %}
+    <button class="btn-ord">
+
+      <a href="{% url 'ordersapp:order_update' item.pk %}">
+        редактировать
+      </a>
+
+    </button >
+      {% endif %}
+    {% if item.status == 'FM' %}
+    <button class="btn-ord">
+
+      <a href="{% url 'ordersapp:order_delete' item.pk %}">
+        удалить
+      </a>
+
+    </button>
+      {% endif %}
+    </td>
+  </tr>
+
+  {% endif %}
+  {% endfor %}
+
+  </tbody>
+</table>
+
+<div class="btm-form-ord">
+  <button class="btn btn-default btn-round">
+  <a href="{% url 'main' %}">
+    на главную
+  </a>
+</button>
+  <button class="btn btn-default btn-round">
+  <a href="{% url 'ordersapp:order_create' %}">
+    новый
+  </a>
+</button>
+</div>
+
+{% else %}
+<div class="text-1">
+  заказов нет
+</div>
+<div class="btm-form-ord">
+
+  <button class="btn btn-default btn-round">
+  <a href="{% url 'main' %}">
+    на главную
+  </a>
+</button>
+  <button class="btn btn-default btn-round">
+  <a href="{% url 'ordersapp:order_create' %}">
+    новый
+  </a>
+</button>
+</div>
+
+{% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,69 @@
+{% load static %}
+<div class="card_add_basket">
+  <div class="category-products">
+    {% for product in products %}
+    <div class="second_hide glav-block" id="second_hide_{{ product.pk }}" style="display:none">
+      <div class="product-show">
+        <p class="first_yelloy_" id="first_yelloy_{{ product.pk }}" style="display:none"
+           onclick="first_yelloy({{ product.pk }})">
+          <img class="img-close" src="{% static 'img/4.png' %}">
+        </p>
+
+        <div class="pr-3">
+          <img class="img-pr-3" src="/media/{{ product.image }}" alt="{{ product.short_desc }}"><br>
+          <div class="text-pr-2">
+            <div class="pr-name-desk">
+              <div class="name-pr-1"><b>{{ product.name }}</b></div>
+              <div class="name-pr-7">{{ product.short_desc|truncatechars:50 }}</div>
+              <div class="name-pr-2">{{ product.description|truncatechars:150 }}</div>
+              <div class="name-pr-2"><b>категория: </b>{{ product.category.name }}</div>
+              <div class="name-pr-6"><b>на складе: </b>{{ product.quantity }}</div>
+            </div>
+            <div class="btm-pr-1">
+              <div class="name-pr-3">{{ product.price }} $</div>
+              <div class="name-pr-4">
+                {% if user.is_authenticated %}
+                <button class="adm-bt bt-add bt-add-2" type="button" value="{{ product.pk }}"></button>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="bl-pr">
+        <p id="first_{{ product.pk }}" onclick="first({{ product.pk }})">
+          <img class="img-prd-1" src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+        </p>
+        <div class="text-pr-1">
+          <h4 class="name-product-1">{{ product.name }}</h4>
+          {% if not product.short_desc %}
+          <p class="description-pr">описания нет</p>
+          {% else %}
+          <p class="description-pr">{{ product.short_desc|truncatechars:30 }}</p>
+          {% endif %}
+          <div class="down-pr">
+            {% if user.is_authenticated %}
+            {% if product.price == 0 %}
+            <div class="cena">бесплатно</div>
+            {% else %}
+            <div class="cena">{{ product.price }} $</div>
+            {% endif %}
+            <button class="adm-bt bt-add bt-add-1" type="button" value="{{ product.pk }}"></button>
+            {% else %}
+            {% if product.price == 0 %}
+            <div class="cena free-btm">бесплатно</div>
+            {% else %}
+            <div class="cena free-btm">{{ product.price }} $</div>
+            {% endif %}
+
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

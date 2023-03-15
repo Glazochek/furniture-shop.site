@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% extends 'mainapp/base.html' %}
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Продукты{% endblock %}</title>
+
+  {% block css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mainapp-style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style-all.css' %}">
+  <style>
+  html {
+    background-color:{{ color.0 }};
+  }
+  .logo {
+    opacity: 0;
+  }
+  </style>
+  {% endblock %}
+
+  {% block js %}
+  {% endblock %}
+
+
+
+</head>
+<body>
+
+{% block menu %}
+<div class="container">
+   <div class="slider">
+
+    <div class="header clearfix log-hed">
+      <a href="" class="logo"></a>
+      <ul class="menu">
+        {% include 'mainapp/includes/inc_menu.html' %}
+        {% if not user.is_authenticated %}
+        <li><a href="{% url 'auth:login' %}">Войти</a></li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'basket:view' %}">корзина</a></li>
+
+        {% if user.is_superuser %}
+        <li><a href="{% url 'admin:users' %}">админка</a></li>
+        {% endif %} </ul>
+
+         <div class="cyrcle-li">
+          <a class="cyc-1" href="{% url 'auth:edit' %}">
+                        <img class="img-logg"
+                 src="
+						{% if not user.image %}
+						/media/users_avatars/default.jpg
+						{% endif %}
+						{% if user.image %}
+						/media/{{ user.image }}
+						{% endif %}"
+                 style="object-fit: cover; height: 50px;width: 50px; border-radius: 100%; ">
+          </a>
+        </div>
+        {% endif %}
+
+
+      <a href="#" class="search"></a>
+    </div>
+       <div class="details">
+    <div class="links clearfix">
+      {% include 'mainapp/includes/inc_categories_menu.html' %}
+    </div>
+    <div class="details-products">
+      {% for product in products %}
+      <div class="description">
+         <img src="/media/{{ product.image }}" alt="#">
+        <h3 class="big-bold">{{ product.name }}</h3>
+        <br>
+        <p class="price"> {{ product.price }} <span>руб</span></p>
+        <a href="{% url 'products:product' product.pk %}" class="red-button">
+          заказать
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+        <div class="description-text">
+          {{ product.description }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+ {% endblock %}{% block content %}
+  <div class="related">
+    <div class="title clearfix">
+      <h2>Похожие продукты</h2>
+      <a class="explore" href="#">показать все <img src="/static/img/arrow.png" alt=""></a>
+    </div>
+    <div class="related-products clearfix">
+
+      {% for product in products %}
+      <div class="block">
+        <a href="#">
+          <img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+          <div class="text">
+            <h1>?</h1>
+            <h3>{{ product.category.name }}</h3>
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+   </div>
+</div>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %}</title>
+
+  {% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .inpt {
+      background-image: url({% if user.image %}/media/{{ user.image }}{% else %}/media/users_avatars/default.png{% endif %});
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+  {% endblock %}
+
+  {% block js %}
+  <script src="{% static 'js/product.js' %}"></script>
+  {% endblock %}
+</head>
+
+<body>
+  {% block menu %}
+  <div class="slider">
+    <div class="header clearfix log-hed">
+      <a href="" class="logo"></a>
+        {% include 'mainapp/includes/inc_menu.html' %}
+      <a href="#" class="search"></a>
+    </div>
+    {% endblock %}
+
+    {% block content %}
+    <div class="text-slider">
+      <h3 class="green">тенденции</h3>
+      <h3 class="big"> удобные стулья</h3>
+      <p>Новый уровень комфорта. Отличные характеристики.</p>
+      <a href="#" class="button-order">заказать</a>
+    </div>
+    <div class="navi">
+      <a href="#"></a><a href="#"></a><a href="#"></a>
+    </div>
+  </div>
+  {% endblock %}
+
+
+</body>
+
+</html>

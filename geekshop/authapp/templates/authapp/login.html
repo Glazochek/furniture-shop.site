@@ -1,0 +1,37 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style-login.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="block-1">
+  <form class="form-horizontal" action="{% url 'auth:login' %}" method="post">
+    {% csrf_token %}
+    {% if next %}
+    <input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+    {{ login_form.as_p }}
+    <br>
+    <input class="form-control btmm" type="submit" value="войти">
+    <a class="form-control btmm" href="{% url 'auth:register' %}">
+      Зарегистрироваться
+    </a>
+    <div class="bt-helps">
+      <a href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
+        <img class="img-vk" src="{% static 'img/vk-1-2.png' %}">
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+
+
+
+
+

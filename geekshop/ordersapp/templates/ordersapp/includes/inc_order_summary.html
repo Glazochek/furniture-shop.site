@@ -1,0 +1,40 @@
+{% if object %}
+<div class="h2">Заказ №{{ object.pk }}</div>
+<div class="inf-ord">
+  <div class="inf-ord-1">
+    <div class="h44">
+      <div class="h4">заказчик: <b>{{ user.username }} {{ user.first_name }}</b></div>
+      <div class="h4">статус: <b>{{ object.get_status_display }}</b></div>
+    </div>
+    <div class="h44">
+      <div class="h4">создан: <b>{{ object.created|date:"Y-m-d H:i:s" }}</b></div>
+      <div class="h4">обновлен: <b>{{ object.updated|date:"Y-m-d H:i:s" }}</b></div>
+    </div>
+  </div>
+  <div class="inf-ord-2">
+    <span class="order_total_quantity"><b> {{ object.get_summary.total_quantity }}</b></span>
+    <div class="probel"> |</div>
+    <span class="order_total_cost"><b>{{ object.get_summary.total_cost }} $</b></span>
+  </div>
+</div>
+
+{% else %}
+<div class="h2">Новый заказ</div>
+<div class="inf-ord-1 bl-1">
+  <div class="h44">
+    <div class="h4">заказчик: <b>{{ user.username }} {{ user.first_name }}</b></div>
+  </div>
+</div>
+
+{% if basket.0 %}
+<div class="inf-ord-2">
+  <div class="h4">
+    общее количество товаров: <span class="order_total_quantity"></span>
+  </div>
+  <div class="h3">
+    общая стоимость: <span class="order_total_cost"></span> руб
+  </div>
+</div>
+{% endif %}
+{% endif %}
+

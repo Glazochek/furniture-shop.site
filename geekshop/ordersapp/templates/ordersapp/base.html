@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>
+    {% block title %}
+    {{ title|title }}
+    {% endblock %}
+  </title>
+
+  {% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/order-style.css' %}">
+  {% endblock %}
+
+  {% block js %}
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/order_scripts.js' %}"></script>
+  {% endblock %}
+
+</head>
+<body>
+<div class="order_container">
+  {% block content %}
+  {% endblock %}
+</div>
+</body>
+</html>

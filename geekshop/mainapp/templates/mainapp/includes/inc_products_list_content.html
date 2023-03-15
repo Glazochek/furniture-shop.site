@@ -1,0 +1,29 @@
+{% load static %}
+<div class="links">
+  {% include 'mainapp/includes/inc_categories_menu.html' %}
+</div>
+<div class="products_list">
+  <div class="glav">
+    <h2 class="categ-name">
+      {% if category.name %}{{ category.name|title }}{% endif %}
+      {% if not category.name %}Все{% endif %}</h2>
+  </div>
+
+  <div class="category-products">
+    {% include 'mainapp/includes/card.html' %}
+  </div>
+
+  <div class="paginator">
+    <a
+            href="{% if products.has_previous %}{% url 'products:page' category.pk products.previous_page_number %}{% else %}#{% endif %}">
+      <img class="strelka-1" src="{% static 'img/strelka.png' %}"
+           style="{% if not products.has_previous %} opacity: 0; {% endif %} transform: rotate(180deg);">
+    </a>
+    <span class="current"><b>{{ products.number }}</b> / <b> {{ products.paginator.num_pages }}</b></span>
+    <a
+            href="{% if products.has_next %}{% url 'products:page' category.pk products.next_page_number %}{% else %}#{% endif %}">
+      <img class="strelka-2" src="{% static 'img/strelka.png' %}"
+           style="{% if not products.has_next %} opacity: 0; {% endif %}">
+    </a>
+  </div>
+</div>

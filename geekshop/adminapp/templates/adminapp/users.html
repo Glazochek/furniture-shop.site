@@ -1,0 +1,70 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/auth-admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="users_list" style="">
+  <button class="new_user button" style="margin: 25px;">
+    <a href="{% url 'admin:user_create' %} ">новый пользователь</a>
+  </button>
+  <div style="margin: 25px; display: flex; flex-wrap: wrap; height: 100%;">
+    {% for object in object_list %}
+    <div
+            class="user_record {% if not object.is_active %}not_active{% endif %}"
+            style="">
+      <div class="img-br">
+        <img class="img-adm"
+             src="/media/{{ object.image|default:'users_avatars/default.png' }}"
+             alt="{{ object.username }}">
+      </div>
+      <div class="name-status">
+        <div class="first-name-2"><strong>{{ object.username }}</strong></div>
+        <div class="first-name-1">
+          {% if object.last_name %}
+          <b>{{ object.last_name|title }}</b>
+          {% endif %}
+        </div>
+        <div class="stat-us">
+          {% if object.is_superuser %}
+          <div class="nike" style="color:green;">администратор</div>
+          {% else %}
+          <div class="nike">пользователь</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="inf-users">
+
+
+        <div class="user_age">
+          age: {{ object.age }} лет
+        </div>
+        <div class="user_email">
+          email: {{ object.email }}
+        </div>
+        <div class="user_lastlogin">
+          logged: {{ object.last_login }}
+        </div>
+      </div>
+
+      <div class="user_role">
+        <button class="button">
+          <a href="{% url 'admin:user_update' object.pk %}">
+            редактировать
+          </a>
+        </button>
+        <button class="button del-btm-1">
+          <a href="{% url 'admin:user_delete' object.pk %}">
+            удалить
+          </a>
+        </button>
+      </div>
+    </div>
+    {% endfor%}
+  </div>
+</div>
+{% endblock %}

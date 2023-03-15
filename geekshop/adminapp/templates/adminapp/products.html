@@ -1,0 +1,50 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/auth-admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<button class="button new_product">
+    <a href="{% url 'admin:product_create' category.pk %}">
+      новый продукт
+    </a>
+  </button>
+<div class="products_list">
+  {% for object in objects %}
+  <div class="product_record">
+    <img class="img-products-1"
+         src="/media/{{object.image|default:'products_images/default.jpg'}}"
+         alt="{{ object.name }}">
+    <div class="list-products">
+      <div class="summary-info">
+        <div class="inf-pr"><b>имя: </b>{{ object.name|title }}</div>
+        <div class="inf-pr"><b>цена: </b>{{ object.price }} руб</div>
+        <div class="inf-pr"><b>количество: </b>{{ object.quantity }}</div>
+        <div class="inf-pr"><b>о продукте: </b>{{ object.short_desc|title }}</div>
+      </div>
+      <div class="product_actions">
+        <button class="button">
+          <a href="{% url 'admin:product_read' object.pk %}">
+            подробнее
+          </a>
+        </button>
+        <button class="button">
+          <a href="{% url 'admin:product_update' object.pk %}">
+            редактировать
+          </a>
+        </button>
+        <button class="button">
+          <a href="{% url 'admin:product_delete' object.pk %}">
+            удалить
+          </a>
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+  {% endfor%}
+</div>
+{% endblock %}

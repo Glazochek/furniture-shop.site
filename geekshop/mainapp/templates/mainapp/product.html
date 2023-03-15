@@ -1,0 +1,56 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<!--<link rel="stylesheet" href="{% static 'css/auth-admin.css' %}">-->
+{% endblock %}
+
+{% block content %}
+<div class="product_read">
+
+  <div class="summary">
+    <img class="img-product" src="/media/{{ object.image|default:'products_images/default.jpg' }}" alt="{{ object.name }}">
+    <div class="info-product">
+    <p><b>Продукт: </b> {{ product.name|title }}</p>
+    <p><b>Категория: </b> {{ product.category.name|title }}</p>
+    <p><b>цена: </b>{{ product.price }} руб</p>
+    <p><b>количество: </b>{{ product.quantity }}</p>
+    <p><b>в каталоге: </b>{% if product.is_active %}да{% else %}нет{% endif %}</p>
+    <div class="product_desc">
+    <p><b>краткая информация: </b>{{ product.short_desc }}</p>
+    <p><b>подробная информация: </b>{{ product.description }}</p>
+    </div>
+    </div>
+  </div>
+    <div  class="general-btm">
+      <p>
+      <button class="button">
+        <a href="{% url 'admin:products' object.category.pk %}">
+          <img src="/static/img/free-icon-long-arrow-pointing-to-the-right-25426.png" style="    transform: rotate(180deg);
+ width: 20px;
+    height: 20px; opacity: 0.5;
+">
+        </a>
+      </button>
+      </p>
+      <div class="geeb-1">
+        <div>
+      <button  class="button">
+        <a href="{% url 'admin:product_update' object.pk %}">
+          редактировать
+        </a>
+      </button>
+    </div>
+    <p>
+      <button class="button">
+        <a href="{% url 'admin:product_delete' object.pk %}">
+          удалить
+        </a>
+      </button>
+    </p>
+      </div>
+  </div>
+  </div>
+
+
+{% endblock %}

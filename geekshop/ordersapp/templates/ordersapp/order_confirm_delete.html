@@ -1,0 +1,22 @@
+{% extends 'ordersapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/order-style.css' %}">
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+<div class="category_delete">
+  {% include 'ordersapp/includes/inc_order_summary.html' %}
+  <form class="btn-del-ord" action="{% url 'ordersapp:order_delete' object.pk %}" method="post">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="удалить">
+    <button class="btn btn-success">
+      <a href="{% url 'ordersapp:orders_list' %}">отмена</a>
+    </button>
+  </form>
+</div>
+{% endblock %}

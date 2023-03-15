@@ -1,0 +1,34 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style-auth.css'%}">
+<link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="user_avatar">
+  <img src="
+{% if user.image %}
+/media/{{ user.image }}
+{% else %}
+/media/users_avatars/default.png
+{% endif %}" style="height: 100px; width: 100px; object-fit: cover; {% if not user.image %}{% endif %}">
+</div>
+<form class="form-horizontal" action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="nam">
+    {{ edit_form.as_p }}
+  </div>
+  <div class="abt">
+    {{ profile_form.as_p }}
+  </div>
+  <input class="form-control bottms-edit" type="submit" value="сохранить">
+</form>
+<div class="bottms-edit btm-lft">
+    <a class="form-control registr-bt btm-1" href="{% url 'main' %}">На главную</a>
+    <a class="form-control registr-bt btm-2" href="{% url 'auth:logout' %}">Выйти</a>
+</div>
+{% endblock %}
